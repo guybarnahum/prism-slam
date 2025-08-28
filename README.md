@@ -43,19 +43,76 @@
             └── primitive.schema.json
 ```
 
+---
+
 ## Quickstart
+
 ```bash
-# Clone your new repo once you've pushed it to GitHub:
+# Clone
 git clone git@github.com:guybarnahum/prism-slam.git
 cd prism-slam
 
-# (Optional) local env
-python -m venv .venv && source .venv/bin/activate
-pip install -r requirements.txt
+# One-time permissions
+chmod +x setup.sh clean.sh
+```
 
-# Validate example dataset structure
+### Install (pyproject-only)
+
+**macOS** (CPU/MPS) **or** **Linux (CPU)**:
+
+```bash
+./setup.sh
+```
+
+**Linux + NVIDIA GPU** (e.g., T4/Ampere; choose CUDA channel if needed):
+
+```bash
+# cu124 is default. You can also use cu121 or cu122.
+TORCH_CHANNEL=cu124 ./setup.sh t4_gpu
+```
+
+**Verify install:**
+
+```bash
+source .venv/bin/activate
+python -c "import torch, torchvision; print(torch.__version__, torchvision.__version__)"
+```
+
+**Validate the sample dataset structure:**
+
+```bash
 python scripts/validate_dataset.py examples/minimal_scene
 ```
+
+> The installer pins Torch to platform-appropriate versions (macOS: 2.2.2/0.17.2; Linux GPU: 2.4.2/0.19.1) and installs project deps from **`pyproject.toml`** extras (`.[cpu]` or `.[t4_gpu]`). No `requirements.txt` needed.
+
+---
+
+## Uninstall / Clean
+
+```bash
+# Full clean: uninstall package, remove .venv, wipe caches/artifacts
+./clean.sh
+
+# Non-interactive
+./clean.sh --yes
+
+# Keep venv; only wipe artifacts (logs, caches, outputs)
+./clean.sh --artifacts-only
+
+# Only remove the venv (and uninstall inside it)
+./clean.sh --venv-only --yes
+
+# See actions without deleting
+./clean.sh --dry-run
+```
+
+---
+
+### Notes
+
+* **CUDA channel**: set `TORCH_CHANNEL` to `cu121`, `cu122`, or `cu124` before `./setup.sh t4_gpu`.
+* **Hugging Face (optional)**: if you use private models, set `HUGGINGFACE_HUB_TOKEN` in your environment before running `setup.sh` to auto-login.
 
 ## Dataset (brief)
 Per-frame JSON (`meta/{frame}.json`):

@@ -1,6 +1,0 @@
-numpy==1.26.4
-scipy==1.13.1
-opencv-python-headless==4.10.0.84
-shapely==2.0.4
-torch==2.3.1
-torchvision==0.18.1

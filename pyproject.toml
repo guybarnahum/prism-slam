@@ -6,11 +6,39 @@ build-backend = "setuptools.build_meta"
 name = "prismslam"
 version = "0.0.1"
 description = "PRISM-SLAM: Hybrid scene-coordinate + primitive-shape mapping for compact, navigation-grade SLAM"
-authors = [{name = "PRISM-SLAM contributors"}]
 readme = "README.md"
 requires-python = ">=3.9"
+authors = [{ name = "PRISM-SLAM contributors" }]
+
+# Base deps that are hardware-agnostic
 dependencies = [
+  "numpy<2",
+  "scipy<1.13",
+  "opencv-python-headless==4.10.0.84",
+  "shapely==2.0.4",
 ]
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[project.optional-dependencies]
+# macOS and Linux-CPU (our script pins CPU wheels or plain Mac wheels)
+cpu = [
+  "torch==2.2.2",
+  "torchvision==0.17.2",
+]
+
+# Linux GPU (CUDA). The setup script supplies the correct --extra-index-url
+# via TORCH_CHANNEL (cu121/cu122/cu124). Versions here match CUDA wheels.
+t4_gpu = [
+  "torch==2.4.2",
+  "torchvision==0.19.1",
+]
+
+# Developer conveniences
+dev = [
+  "ruff>=0.5",
+  "black>=24.3",
+  "pytest>=8.2",
+  "mypy>=1.10",
+]
