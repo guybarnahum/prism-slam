@@ -1,5 +1,5 @@
 <img src="prism-slam-banner.png" width="100%"/>
-# PRISM-SLAM
+
 **PRImitive Scene Map SLAM** — a hybrid visual SLAM that combines a **scene-coordinate head** (PnP/DSAC) for precise pose with a **primitive-shape head** (planes/cuboids/cylinders/superquadrics) for a **tiny, planner-ready map**.
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/guybarnahum/prism-slam/blob/main/notebooks/PRISM_SLAM_Colab.ipynb)
