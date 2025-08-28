@@ -1,3 +1,4 @@
+<img src="prism-slam-banner.png" width="100%"/>
 # PRISM-SLAM
 **PRImitive Scene Map SLAM** — a hybrid visual SLAM that combines a **scene-coordinate head** (PnP/DSAC) for precise pose with a **primitive-shape head** (planes/cuboids/cylinders/superquadrics) for a **tiny, planner-ready map**.
 
