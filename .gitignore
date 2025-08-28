@@ -1,0 +1,122 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+env/
+ENV/
+.python-version
+pip-wheel-metadata/
+pip-log.txt
+
+# Packaging / build
+build/
+dist/
+.eggs/
+*.egg-info/
+**/*.egg-info
+
+# Test / type check / tooling caches
+.pytest_cache/
+.mypy_cache/
+.pytype/
+.ruff_cache/
+.tox/
+.nox/
+
+# Coverage
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+
+# --- Jupyter / Colab ---
+.ipynb_checkpoints/
+.jupyter/lab/workspaces/
+
+# --- IDE / Editor ---
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# --- OS cruft ---
+.DS_Store
+Thumbs.db
+
+# --- Logs / temp / caches ---
+logs/
+*.log
+tmp/
+temp/
+.cache/
+cache/
+wandb/
+mlruns/
+tensorboard/
+tb_logs/
+runs/
+experiments/
+
+# --- Data & artifacts (keep examples/ small assets tracked) ---
+data/**
+datasets/**
+outputs/**
+results/**
+checkpoints/**
+# If you want to keep a placeholder in these dirs:
+# !data/.gitkeep
+# !datasets/.gitkeep
+# !outputs/.gitkeep
+# !results/.gitkeep
+# !checkpoints/.gitkeep
+
+# Common ML artifacts
+*.npz
+*.npy
+*.pt
+*.pth
+*.onnx
+*.ckpt
+*.bin
+*.tfrecord
+*.h5
+*.pkl
+*.tar
+*.tar.gz
+*.7z
+*.xz
+*.lz4
+# NOTE: Large binaries are handled via Git LFS in .gitattributes; we ignore them here too.
+
+# --- Secrets / environment ---
+.env
+.env.*
+*.env
+credentials.json
+token.json
+*.pem
+*.key
+
+# --- C/C++/CUDA build outputs (uncomment if you add native extensions) ---
+# *.o
+# *.obj
+# *.a
+# *.lib
+# *.dll
+# *.so
+# *.dylib
+
+# --- CMake builds (uncomment if you use CMake) ---
+# CMakeCache.txt
+# CMakeFiles/
+# cmake-build-*/
+# build*/ 
+
+# --- ROS/catkin (uncomment if you use ROS) ---
+# devel/
+# build/
+# .catkin_tools/
+# logs/
+

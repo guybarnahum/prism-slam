@@ -1,0 +1,52 @@
+{
+  "type": "object",
+  "required": [
+    "frame_id",
+    "rgb_path",
+    "K",
+    "T_cw",
+    "scene_id"
+  ],
+  "properties": {
+    "frame_id": {
+      "type": "integer"
+    },
+    "timestamp": {
+      "type": [
+        "number",
+        "integer"
+      ]
+    },
+    "rgb_path": {
+      "type": "string"
+    },
+    "depth_path": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "dyn_mask_path": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "K": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3
+    },
+    "T_cw": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4
+    },
+    "scene_id": {
+      "type": "string"
+    },
+    "split": {
+      "type": "string"
+    }
+  }
+}

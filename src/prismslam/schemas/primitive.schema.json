@@ -1,0 +1,27 @@
+{
+  "type": "object",
+  "required": [
+    "type",
+    "params"
+  ],
+  "properties": {
+    "id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "plane",
+        "cuboid",
+        "cylinder",
+        "superquadric"
+      ]
+    },
+    "params": {
+      "type": "object"
+    }
+  }
+}
