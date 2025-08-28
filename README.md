@@ -1,5 +1,32 @@
 <img src="prism-slam-banner.png" width="100%"/>
 
+## Motivation — Realtime World Model (Monocular)
+
+We aim to build a **realtime world model** from **monocular** sensors that yields both precise **camera pose** and a **compact map of static geometry**, while handling **dynamic objects**. Many robotics applications need *actionable* 3D understanding rather than photorealistic rendering.
+
+We use a **progressive, anytime pipeline** with **multi-level outputs**:
+
+- **Level 0 — Coarse anti-collision (early exit, highest FPS)**  
+  Coarse free-space / obstacle likelihood + dynamic/static mask for immediate avoidance.
+
+- **Level 1 — Medium resolution + classification + map registration**  
+  Primitive shapes with classes (planes/cuboids/cylinders/superquadrics) and **pose** from scene-coordinates (PnP). Supports loop-closure and compact map growth.
+
+- **Level 2 — High resolution identification (lowest FPS)**  
+  Fine-grained sub-classes/attributes and primitive refinements for richer semantics.
+
+Levels update at **different rates** (L0 fastest → L2 slowest) and are **emitted progressively** during a single forward pass via **early-exit heads**.
+
+## Progressive Multi-Level Outputs — Is this possible?
+
+**Yes.** The shared backbone feeds **early**, **mid**, and **late** heads:
+- L0 at stride 16/32 → coarse occupancy/free-space + dynamic segmentation.
+- L1 at stride 8 → primitive set-prediction + scene-coordinates for PnP/DSAC.
+- L2 at stride 4 → refinements + fine-grained identification.
+
+**Training:** multitask losses with uncertainty/GradNorm balancing; anytime distillation (L0/L1 mimic L2 where relevant); dynamic masking.  
+**Runtime:** emit L0 ASAP for safety, update pose & map with L1, and use L2 opportunistically within budget.
+
 **PRImitive Scene Map SLAM** — a hybrid visual SLAM that combines a **scene-coordinate head** (PnP/DSAC) for precise pose with a **primitive-shape head** (planes/cuboids/cylinders/superquadrics) for a **tiny, planner-ready map**.
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/guybarnahum/prism-slam/blob/main/notebooks/PRISM_SLAM_Colab.ipynb)
