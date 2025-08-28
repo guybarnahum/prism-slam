@@ -13,16 +13,33 @@
 
 ## Repo Layout
 ```
-prism-slam/
-  notebooks/PRISM_SLAM_Colab.ipynb
-  src/prismslam/...
-  scripts/validate_dataset.py
-  examples/minimal_scene/...
-  LICENSE
-  pyproject.toml
-  requirements.txt
-  .gitignore
-  .gitattributes
+.
+├── LICENSE
+├── README.md
+├── examples
+│   └── minimal_scene
+│       ├── images
+│       │   └── 000001.png
+│       ├── meta
+│       │   └── 000001.json
+│       └── primitives
+│           └── 000001.json
+├── notebooks
+│   └── PRISM_SLAM_Colab.ipynb
+├── pyproject.toml
+├── requirements.txt
+├── scripts
+│   └── validate_dataset.py
+└── src
+    └── prismslam
+        ├── __init__.py
+        ├── datasets
+        │   └── __init__.py
+        ├── matching.py
+        ├── primitives.py
+        └── schemas
+            ├── frame_meta.schema.json
+            └── primitive.schema.json
 ```
 
 ## Quickstart
