@@ -35,6 +35,14 @@ t4_gpu = [
   "torchvision==0.19.1",
 ]
 
+viz = [
+  "rerun-sdk>=0.18.0",
+  "opencv-python>=4.9",
+  "numpy",
+  "typer>=0.12",
+  "tqdm>=4.66"
+]
+
 # Developer conveniences
 dev = [
   "ruff>=0.5",

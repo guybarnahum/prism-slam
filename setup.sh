@@ -10,15 +10,18 @@
 #     Linux cpu: torch==2.2.2 torchvision==0.17.2 (CPU wheels)
 #     Linux t4_gpu: torch==2.4.2 torchvision==0.19.1 (from ${TORCH_CHANNEL:-cu124})
 # - Installs project from pyproject extras only (.[cpu] or .[t4_gpu])
+# - NEW: --with-viz installs .[viz] alongside your variant (e.g., .[cpu,viz] or .[t4_gpu,viz])
 #
 set -e
 
 # -------- Args --------
 AUTO_YES=""
 VARIANT=""      # cpu | t4_gpu (auto if not provided)
+WITH_VIZ=0      # add .[viz] extra if set
 for arg in "$@"; do
   case "$arg" in
     --yes|-y) AUTO_YES="--yes" ;;
+    --with-viz|--viz) WITH_VIZ=1 ;;
     cpu|t4_gpu) VARIANT="$arg" ;;
     *) ;;
   esac
@@ -127,6 +130,7 @@ if [[ -z "$VARIANT" ]]; then
   else VARIANT="cpu"; fi
 fi
 echo "Chosen variant: ${VARIANT}"
+[[ "$WITH_VIZ" -eq 1 ]] && echo "Extra: [viz] will be installed"
 
 # -------- ABI guards --------
 run_and_log "Ensure NumPy/SciPy ABI compatibility" pip install "numpy<2" "scipy<1.13" --upgrade
@@ -153,12 +157,21 @@ else
 fi
 
 # -------- Step 6: Project deps (pyproject extras only) --------
-run_and_log "Install project (editable)" pip install -e .
+run_and_log "Install project core (editable)" pip install -e .
+
+# Build the extras string: cpu|t4_gpu plus optional viz
+EXTRAS=""
 if [[ "$uname_s" == "Darwin" || "$VARIANT" == "cpu" ]]; then
-  run_and_log "Install extras [cpu]"    pip install -e ".[cpu]"
+  EXTRAS="cpu"
 elif [[ "$VARIANT" == "t4_gpu" ]]; then
-  run_and_log "Install extras [t4_gpu]" pip install -e ".[t4_gpu]"
+  EXTRAS="t4_gpu"
+else
+  echo "❌ Unknown extras base for variant '$VARIANT'"; exit 1
 fi
+if [[ "$WITH_VIZ" -eq 1 ]]; then
+  EXTRAS="${EXTRAS},viz"
+fi
+run_and_log "Install extras [${EXTRAS}]" pip install -e ".[${EXTRAS}]"
 
 # -------- Step 7: Optional Hugging Face auth --------
 if [ -n "${HUGGINGFACE_HUB_TOKEN:-}" ]; then
@@ -169,3 +182,4 @@ echo ""
 echo "✅ Setup complete (variant: ${VARIANT}; OS: ${uname_s})."
 echo "Activate:   source ${VENV_DIR}/bin/activate"
 echo "Verify:     python -c 'import torch, torchvision; print(torch.__version__, torchvision.__version__)'"
+[[ "$WITH_VIZ" -eq 1 ]] && echo "Viz tip:  python scripts/simulate_outputs.py examples/minimal_scene --out outputs/simulated && python scripts/viz_rerun.py examples/minimal_scene --pred outputs/simulated --fps 10"
