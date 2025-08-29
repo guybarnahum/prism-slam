@@ -1,6 +1,3 @@
-Here’s a drop-in **`scripts/README.md`** you can paste into your repo.
-
-```markdown
 # PRISM-SLAM · `scripts/` toolkit
 
 Utilities for generating synthetic datasets, simulating multi-level model outputs, validating structure, and visualizing GT vs predictions with [Rerun](https://www.rerun.io/).
@@ -173,7 +170,6 @@ python scripts/viz_rerun.py examples/sim_circle_60 \
 
 ---
 
-```
 
 Want me to commit this content into `scripts/README.md` and add a link to it from the top-level `README.md`?
 ::contentReference[oaicite:0]{index=0}
